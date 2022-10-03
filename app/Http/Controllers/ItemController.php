@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 
+  
+
 class ItemController extends Controller
 {
     /**
@@ -17,17 +19,22 @@ class ItemController extends Controller
     {
         $this->middleware('auth');
     }
-
+    // public function edit(Request $request,$id)
+    // {
+    //     $user=User::find($id);
+    //     return view("user.form",[
+    //         'user' => $user,
+    //     ]);
+    // }
     /**
      * 商品一覧
      */
     public function index()
     {
         // 商品一覧取得
-        $items = Item
-            ::where('items.status', 'active')
-            ->select()
-            ->get();
+        $items = Item::all();
+        //allにすることで全ての項目に入る
+        // $items = Item::where('status', 'active')->get();
 
         return view('item.index', compact('items'));
     }
@@ -37,7 +44,7 @@ class ItemController extends Controller
      */
     public function add(Request $request)
     {
-        // POSTリクエストのとき
+        // POSTリクエストのとき、この処理にてbladeにindexがいらない
         if ($request->isMethod('post')) {
             // バリデーション
             $this->validate($request, [
@@ -49,7 +56,8 @@ class ItemController extends Controller
                 'user_id' => Auth::user()->id,
                 'name' => $request->name,
                 'type' => $request->type,
-                'detail' => $request->detail,
+                'release' => $request->release,
+                'status' => $request->status,
             ]);
 
             return redirect('/items');
@@ -57,4 +65,44 @@ class ItemController extends Controller
 
         return view('item.add');
     }
+
+    /**
+     * 商品編集 $item=Item::find($id);でpostの役割
+     */
+    public function edit(Request $request,$id)
+    {
+        $item=Item::find($id);
+        // POSTリクエストのとき
+        if ($request->isMethod('post')) {
+            // バリデーション
+            $this->validate($request, [
+                'name' => 'required|max:100',
+            ]);
+
+
+            $item->id = $request->id;
+            $item->name = $request->name;
+            $item->type = $request->type;
+            $item->release = $request->release;
+            $item->status = $request->status;
+            $item->save();
+            //$item->save();をしないとデーターが保存されない
+            
+            // 商品編集
+            // Item::create([
+            //     'user_id' => Auth::user()->id,
+            //     'name' => $request->name,
+            //     'type' => $request->type,
+            //     'release' => $request->release,
+            //     'status' => $request->status,
+            // ]);
+
+            return redirect('/items');
+        }
+
+        return view('item.edit',['item' => $item]);
+        //editに編集したitemを入れる配列？
+    
+    }
+
 }
