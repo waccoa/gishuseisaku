@@ -9,8 +9,8 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <div class="card">
-                <div class="card-header">
+             <div class="card">
+             <div class="card-header">
                     <h3 class="card-title">商品一覧</h3>
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
@@ -29,6 +29,7 @@
                                 <th>種別</th>
                                 <th>リリース日</th>
                                 <th>状態</th>
+                                <th>貸し出しユーザー</th>
                                 
                             </tr>
                         </thead>
@@ -41,6 +42,18 @@
                                     <td>{{ $item->type }}</td>
                                     <td>{{ $item->release }}</td>
                                     <td>{{ $item->status }}</td>
+                                    <td>
+                                 <!-- statusが3なら -->
+                                @if($item->status==1)   
+                                在庫あり
+                                <!-- userのroleが1以外のとき -->
+                                @elseif($item->status==2)
+                                在庫なし
+                                <!-- コロン構文のif文の終わり -->
+                                @else
+                                {{ $item->user }}
+                                @endif
+                               </td>
                                 
                                 </tr>
                             @endforeach

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Item;
+use App\Models\User;
 
   
 
@@ -32,10 +34,14 @@ class ItemController extends Controller
     public function index()
     {
         // 商品一覧取得
-        $items = Item::all();
+        // $items = Item::all();
+        $items = DB::table('items')
+            ->select('items.name', 'items.id', 'items.type', 'items.release', 'items.status', 'users.name as user')
+            ->leftJoin('users', 'items.user_id', '=', 'users.id')
+            ->get();
         //allにすることで全ての項目に入る
         // $items = Item::where('status', 'active')->get();
-
+// dd($items);
         return view('item.index', compact('items'));
     }
 
