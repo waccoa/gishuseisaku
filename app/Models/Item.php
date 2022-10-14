@@ -18,8 +18,18 @@ class Item extends Model
         'detail',
         'release',
         'status',
+        'rental_date',
         
     ];
+    // const TYPE_NAME = [
+    //     '1' => 'ノンフィクション',
+    //     '2' => 'ミステリー',
+    //     '3' => 'ファンタジー',
+    //     '4' => '歴史小説',
+    //     '5' => '短編小説',
+    //     '6' => '図鑑',
+    //     '7' => 'エッセイ',
+    // ];
 
     /**
      * The attributes that should be hidden for serialization.

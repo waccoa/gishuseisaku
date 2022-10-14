@@ -13,6 +13,11 @@
                 
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">
+                    <!-- 検索画面 -->
+                    <form method="GET" action="">
+                     <input type="search" placeholder="ユーザー名を入力" name="search" value="@if (isset($search)) {{ $search }} @endif">
+                        <button type="submit">検索</button><br><br>
+                        <!-- 検索画面 -->
                         <thead>
                             <tr>
                                 <th>ユーザーID</th>
@@ -42,11 +47,13 @@
                                 <!-- コロン構文のif文の終わり -->
                                 @endif
                                </td>
-
+                               
                                 </tr>
                             @endforeach
+                            
                         </tbody>
                     </table>
+                    {{ $users->appends(request()->query())->Links('pagination::bootstrap-4') }}
                 </div>
             </div>
         </div>

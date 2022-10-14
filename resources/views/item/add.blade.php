@@ -30,7 +30,13 @@
 
                         <div class="form-group">
                             <label for="type">種別</label>
-                            <input type="number" class="form-control" id="type" name="type" placeholder="1, 2, 3, ...">
+                            <!-- <input type="number" class="form-control" id="type" name="type" > -->
+                            <select class="form-control" name="type">
+                            <option value="" selected="selected">選択してください</option>
+                            @foreach(config('const.type_name') as $key=>$val)
+                            <option value="{{$key}}" {{old('type')==$key ? "selected" : ""}}>{{$val}}</option>
+                            @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">

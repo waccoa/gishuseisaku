@@ -9,18 +9,27 @@
 @section('content')
     <div class="row">
         <div class="col-12">
+            <!-- 検索画面 -->
+                <form method="GET" action="/items/">
+                    <input type="search" placeholder="タイトルを入力" name="search" value="@if (isset($search)) {{ $search }} @endif">
+                     <button type="submit">検索</button><br><br>
+                </form>
+            <!-- 検索画面 -->
              <div class="card">
              <div class="card-header">
-                    <h3 class="card-title">商品一覧</h3>
+                   
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
                             <div class="input-group-append">
+                            @can('admin-role')
                                 <a href="{{ url('items/add') }}" class="btn btn-default">商品登録</a>
+                            @endcan
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-body table-responsive p-0">
+                    
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
@@ -37,21 +46,33 @@
                             @foreach ($items as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td><a href="{{ url('items/edit/'.$item->id) }}">{{ $item -> name }}</a></td>
-                                    <!-- <td>{{ $item->name }}</td> -->
-                                    <td>{{ $item->type }}</td>
+                                    <td>
+                                        
+                                    @can('admin-role')
+                                     <a href="{{ url('items/edit/'.$item->id) }}">
+                                    @endcan
+                                    {{ $item -> name }}
+                                    @can('admin-role')
+                                    </a>
+                                    @endcan
+                                    </td>
+                                       <!-- <td>{{ $item->name }}</td> -->
+                                    <td>{{ config('const.type_name.'.$item->type) }}</td>
+                                    <!--☆$type[$item->type] ☆-->
                                     <td>{{ $item->release }}</td>
                                     <td>{{ $item->status }}</td>
                                     <td>
                                  <!-- statusが3なら -->
                                 @if($item->status==1)   
-                                在庫あり
+                                    在庫あり
                                 <!-- userのroleが1以外のとき -->
                                 @elseif($item->status==2)
-                                在庫なし
+                                    在庫なし
                                 <!-- コロン構文のif文の終わり -->
                                 @else
-                                {{ $item->user }}
+                                    @can('admin-role')
+                                        {{ $item->user }}
+                                    @endcan
                                 @endif
                                </td>
                                 
@@ -59,6 +80,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                     {{ $items->appends(request()->query())->Links('pagination::bootstrap-4') }} 
                 </div>
             </div>
         </div>

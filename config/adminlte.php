@@ -246,8 +246,9 @@ return [
         ],
         [
             'text' => 'レンタル一覧',
-            'url'  => 'rental',
+            'url'  => 'items/rental',
             'icon' => 'fas fa-book',
+            //'url' => '表示させたいurl'
         ],
        
         // AdminLTEデフォルト

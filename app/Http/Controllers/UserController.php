@@ -29,14 +29,26 @@ class UserController extends Controller
     /**
      * 商品一覧
      */
-    public function users()
+    public function users(Request $request)
     {
         // ユーザー一覧取得
         $users = User::all();
+        $search = $request->input('search');
+        $query = User::query();
+        if ($search) {
+            //SQL発行しただけ
+            $query->where('name', 'like', '%'.$search.'%')->orderBy('id');
+            //実際に検索実行、Getでも可能
+            $users=$query->paginate(10);
+        } else {
+        
+            $users = User::orderBy('id')->paginate(10); 
+        }
+      
         //allにすることで全ての項目に入る
         // $items = Item::where('status', 'active')->get();
 
-        return view('user.users', compact('users'));
+        return view('user.users', compact('users','search'));
     }
     public function detail(Request $request,$id)
     //public function detail()の中に値を入れることで操作する

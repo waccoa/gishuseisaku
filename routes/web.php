@@ -30,5 +30,6 @@ Route::prefix('items')->group(function () {
     Route::get('/add', [App\Http\Controllers\ItemController::class, 'add']);
     Route::post('/add', [App\Http\Controllers\ItemController::class, 'add']);
     Route::any('/edit/{id}', [App\Http\Controllers\ItemController::class, 'edit']);
+    Route::get('/rental', [App\Http\Controllers\ItemController::class, 'rental']);
     // getでもらいpostで保存するイメージ/edit{id}からもらいitemのコントローラーに渡しmodelと処理を行いviewで返す
 });
