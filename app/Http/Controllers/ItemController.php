@@ -43,13 +43,13 @@ class ItemController extends Controller
         //  $query = Item::query();
         $search = $request->input('search');
         // $query = Item::query();
-        dump(isset($search));
+        // dump(isset($search));
         if (isset($search)) {
             //SQL発行しただけ
             $items = $query->where('items.name', 'like', '%'.$search.'%')->orderBy('items.id')->paginate(1);
             //実際に検索実行、Getでも可能
             // $items->paginate(10);
-            // dd($items);
+        
         } else {
         
             $items =  $query->orderBy('items.id')->paginate(10); 
@@ -58,7 +58,7 @@ class ItemController extends Controller
         }
         //allにすることで全ての項目に入る
         // $items = Item::where('status', 'active')->get();
-        // dd($items);
+      
         //$types=Item::TYPE_NAME;
         return view('item.index', compact('items','search'));
     }
@@ -97,6 +97,8 @@ class ItemController extends Controller
     public function edit(Request $request,$id)
     {
         $item=Item::find($id);
+        $users = User::all();
+        //usersのuserを全てもってくる
         // POSTリクエストのとき
         if ($request->isMethod('post')) {
             // バリデーション
@@ -110,6 +112,7 @@ class ItemController extends Controller
             $item->type = $request->type;
             $item->release = $request->release;
             $item->status = $request->status;
+            $item->user_id = $request->user;
             $item->save();
             //$item->save();をしないとデーターが保存されない
             
@@ -125,14 +128,17 @@ class ItemController extends Controller
             return redirect('/items');
         }
 
-        return view('item.edit',['item' => $item]);
+        return view('item.edit',['item' => $item,'users' => $users]);
         //editに編集したitemを入れる配列？
     
     }
+      /**
+     * レンタル一覧
+     */
     public function rental(Request $request)
     {
-        $item=Item::where('status','=',3)->get();
-    
+        $item=Item::oldest('rental_date')->where('status','=',3)->get();
+        
         // POSTリクエストのとき
         if ($request->isMethod('post')) {
             // バリデーション
@@ -153,5 +159,81 @@ class ItemController extends Controller
 
         return view('item.rental',['items' => $item]);
         //itemのrentalをitems関数を利用しcontrollerの$itemを使用し表示
+    }
+    /**
+     * 予約システム 
+     */
+    public function reservation(Request $request,$id)
+    {
+        $item=Item::find($id);
+        // POSTリクエストのとき
+        // if ($request->isMethod('post')) {
+        //     // バリデーション
+        //     $this->validate($request, [
+        //         'name' => 'required|max:100',
+        //     ]);
+
+        //     $item->id = $request->id;
+        //     $item->name = $request->name;
+        //     $item->type = $request->type;
+        //     $item->rental_date = date('Y-m-d');
+        //     $item->save();
+        //     return redirect('/items/reserve/list');
+        //     // return view('item.reserve',['item' => $item]);   
+        // }
+        return view('item.reservation',['item' => $item]);
+        //itemのrentalをitems関数を利用しcontrollerの$itemを使用し表示
+    }
+    /**
+     * 商品一覧から予約フォームへ
+     */
+//     public function kari(Request $request)
+//     {
+//         // Get＊リロード・リンク・リダイレクトなどページを見たい時
+//         if ($request->isMethod('post')) {
+      
+           
+//         $item->id = $request->id;
+//         $item->name = $request->name;
+//         $item->type = $request->type;
+//         $item->rental_date = date('Y-m-d');
+//         $item->save();
+//         return view('item.reserve',['item' => $item]); 
+        
+//     }
+//     return redirect('/items');
+// }
+    /**
+     * 予約フォーム
+     */
+    public function reserve(Request $request)
+    {
+    //   dd($request->all());
+        // POSTリクエストのとき
+         $item = Item::find($request->id);
+            
+            $item->name = $request->name;
+            $item->type = $request->type;
+            $item->status = 1;
+            $item->rental_date = $request->date;
+            $item->user_id = Auth::user()->id;
+            $item->save();
+            return redirect('/items/reserve/list');
+        
+
+        
+        //itemのrentalをitems関数を利用しcontrollerの$itemを使用し表示
+    }
+    /**
+     * 予約し予約一覧へ
+     */
+    public function reserve_list(Request $request){
+       
+    $item = new Item;
+      $items=$item->leftJoin('users', 'items.user_id', '=', 'users.id')
+      ->whereNotNull('rental_date')->orderBy('rental_date')
+      ->select('items.*')
+      ->get();
+        return view('item.reserve',['items' => $items]);
     }
 }

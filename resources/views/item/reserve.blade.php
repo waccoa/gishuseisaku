@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'レンタル一覧')
+@section('title', '予約一覧')
 
 @section('content_header') 
-    <h1>レンタル一覧</h1>
+    <h1>予約一覧</h1>
  @stop
 
 @section('content') 
@@ -15,7 +15,8 @@
                                 <th>ID</th>
                                 <th>名前</th>
                                 <th>種別</th>
-                                <th>レンタル日</th>
+                                <th>予約日</th>
+                                <th>ユーザー</th>
                                 
                                 
                             </tr>
@@ -24,10 +25,10 @@
                             @foreach ($items as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td>{{ $item -> name }}</td>
+                                    <td>{{ $item->name }}</td>
                                     <td>{{ $item->type }}</td>
                                     <td>{{ $item->rental_date}}</td>
-                         
+                                    <td>{{ $item-> user->name}}</td>
                                 
                                 </tr>
                             @endforeach

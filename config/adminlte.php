@@ -250,6 +250,13 @@ return [
             'icon' => 'fas fa-book',
             //'url' => '表示させたいurl'
         ],
+
+        [
+            'text' => '予約一覧',
+            'url'  => 'items/reserve/list',
+            'icon' => 'fas fa-bell',
+            //'url' => '表示させたいurl'
+        ],
        
         // AdminLTEデフォルト
         /*

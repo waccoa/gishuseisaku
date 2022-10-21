@@ -39,6 +39,8 @@
                                 <th>リリース日</th>
                                 <th>状態</th>
                                 <th>貸し出しユーザー</th>
+                                <th>予約</th>
+    
                                 
                             </tr>
                         </thead>
@@ -74,6 +76,11 @@
                                         {{ $item->user }}
                                     @endcan
                                 @endif
+                               </td>
+                               <td>
+                               @if($item->status==1||$item->status==3)
+                               <a href="{{ url('items/reservation/'.$item->id) }}"><button type="button" class="btn btn-success">予約</button></a>
+                               @endif
                                </td>
                                 
                                 </tr>

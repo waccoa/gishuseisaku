@@ -11,16 +11,19 @@
     <div class="panel-body table">
   
     <table class="table table-striped">
+    
  
-      <thead>
-                <th class="text-center">ID</th>
-                <th class="text-center">名前</th>
-                <th class="text-center">種別</th>
-                <th class="text-center">貸し出し日</th>
-                <th class="text-center">返却日</th>
+      <thead class="thead-dark">
+            <th>ID</th>
+            <th>名前</th>
+            <th>種別</th>
+            <th>貸し出し日</th>
+            <th>返却日</th>
+            <th>予約日</th>
      </thead>
      <!-- テーブル本体 -->
            <tbody>
+          
                @foreach ($items as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
@@ -29,6 +32,7 @@
                                     <td>{{ $item->rental_date }}</td>
                                     <?php $date=new DateTime($item->rental_date);?>
                                     <td>{{ $date->modify('+14 days')->format('Y-m-d') }}</td>
+                                    <td>{{ $item->rental_date }}</td>
                                 </tr>
                             @endforeach
                          
