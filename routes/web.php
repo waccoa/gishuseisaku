@@ -22,11 +22,14 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth', 'can:admin-role']], function () {
+Route::delete('/destroy/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
 Route::get('/users', [App\Http\Controllers\UserController::class, 'users']);
 Route::any('/detail/{id}', [App\Http\Controllers\UserController::class, 'detail']);
 });
 // /items/reverve
 Route::prefix('items')->group(function () {
+    // 本の削除
+    Route::post('/destroy/{id}', [App\Http\Controllers\ItemController::class, 'destroy'])->name('item.destroy');
     Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
     Route::get('/add', [App\Http\Controllers\ItemController::class, 'add']);
     Route::post('/add', [App\Http\Controllers\ItemController::class, 'add']);
@@ -36,6 +39,6 @@ Route::prefix('items')->group(function () {
     // Route::post('/kari', [App\Http\Controllers\ItemController::class, 'kari']);
     Route::post('/reserve', [App\Http\Controllers\ItemController::class, 'reserve']);
     Route::get('/reserve/list', [App\Http\Controllers\ItemController::class, 'reserve_list']);
-    
+   
     // getでもらいpostで保存するイメージ/edit{id}からもらいitemのコントローラーに渡しmodelと処理を行いviewで返す
 });

@@ -29,10 +29,10 @@
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ config('const.type_name.'.$item->type) }}</td>
-                                    <td>{{ $item->rental_date }}</td>
+                                    <td>@empty($item->yoyaku_date){{ $item->rental_date }} @endempty</td>
                                     <?php $date=new DateTime($item->rental_date);?>
-                                    <td>{{ $date->modify('+14 days')->format('Y-m-d') }}</td>
-                                    <td>{{ $item->rental_date }}</td>
+                                    <td>@empty($item->yoyaku_date){{ $date->modify('+14 days')->format('Y-m-d') }}@endempty</td>
+                                    <td>{{ $item->yoyaku_date }}</td>
                                 </tr>
                             @endforeach
                          

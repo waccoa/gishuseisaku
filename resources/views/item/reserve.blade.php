@@ -27,7 +27,7 @@
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->type }}</td>
-                                    <td>{{ $item->rental_date}}</td>
+                                    <td>{{ $item->yoyaku_date}}</td>
                                     <td>{{ $item-> user->name}}</td>
                                 
                                 </tr>

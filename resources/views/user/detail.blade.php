@@ -50,9 +50,25 @@
                        </div>
  
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">登録</button>
-                    </div>
-                </form>
+                    <div class="container">
+                            <div class="row">
+                                <div class="col-6">
+                                <button type="submit" class="btn btn-primary">登録</button>
+                                </div>
+                                <div class="col-6 justify-content-end">
+                                </form>     
+                                {{-- 削除ボタン --}}
+                                <form action="{{route('user.destroy', $user->id)}}" method="post" class="float-right">
+                                    @csrf
+                                    @method('delete')
+                                    <input type="submit" name="id" value="削除" class="btn btn-danger" onclick='return confirm("削除しますか？");'>
+                                </form>
+
+                                <!-- <button type="submit" class="btn btn-danger">削除</button> -->
+                                </div>
+                            </div>
+                        </div>
+                
             </div>
         </div>
     </div>

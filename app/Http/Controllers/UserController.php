@@ -77,5 +77,17 @@ class UserController extends Controller
         //userのdetailを表示、compact関数にてviewとcontrollerの関数が同じ時に処理できる
     
 }
+       //削除機能
+        public function destroy($id)
+        {
+            $user = User::find($id);
+            //今ログインしていいる人の権限が管理者かどうか
+        // if (auth()->user()->id != id) {
+        //     return redirect('/users')->with('error', '許可されていない操作です');
+        // }
+        $user->delete();
+        
+        return redirect('/users')->with('success', 'ユーザーを削除しました');
 
+        }
 }

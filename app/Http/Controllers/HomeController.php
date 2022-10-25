@@ -22,14 +22,17 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
          $items = DB::table('items')
-        ->select('items.name', 'items.id', 'items.type', 'items.rental_date')
+        ->select('items.name', 'items.id','items.type', 'items.rental_date','items.yoyaku_date')
         ->leftJoin('users', 'items.user_id', '=', 'users.id')
-        ->where ('items.status','=',3)
         ->where('users.id','=',Auth::id())
         ->get();
+        
+
+        
+       
    
     return view('home', compact('items'));
     }

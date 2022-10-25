@@ -215,7 +215,7 @@ class ItemController extends Controller
             $item->name = $request->name;
             $item->type = $request->type;
             $item->status = 1;
-            $item->rental_date = $request->date;
+            $item->yoyaku_date = $request->date;
             $item->user_id = Auth::user()->id;
             $item->save();
             return redirect('/items/reserve/list');
@@ -231,9 +231,21 @@ class ItemController extends Controller
        
     $item = new Item;
       $items=$item->leftJoin('users', 'items.user_id', '=', 'users.id')
-      ->whereNotNull('rental_date')->orderBy('rental_date')
+      ->whereNotNull('yoyaku_date')->orderBy('yoyaku_date')
       ->select('items.*')
       ->get();
         return view('item.reserve',['items' => $items]);
+    }
+
+     /**
+     * 削除処理
+     */
+    public function destroy($id)
+    {
+        $item = Item::find($id);
+        // レコードを削除
+        $item->delete();
+        // 削除したら一覧画面にリダイレクト
+        return redirect('/items');
     }
 }
