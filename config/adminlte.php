@@ -233,6 +233,7 @@ return [
         ],
         [
             
+            'can' => 'admin-role',
             'text' => 'ユーザ一覧',
             'url'  => 'users',
             'icon' => 'fas fa-user',
