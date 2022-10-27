@@ -17,10 +17,6 @@ class AddYoyakuDateToItemsTable extends Migration
            
                 $table->date('yoyaku_date')->nullable();
             });
-            Schema::table('users', function (Blueprint $table) {
-                $table->dropColumn('yoyaku_date');
-            });
-        
     }
 
     /**
@@ -33,8 +29,5 @@ class AddYoyakuDateToItemsTable extends Migration
         Schema::table('items', function (Blueprint $table) {
             $table->dropColumn('yoyaku_date');
         });
-        Schema::table('users', function (Blueprint $table) {
-            $table->date('yoyaku_date')->nullable();
-        }); 
     }
 }
