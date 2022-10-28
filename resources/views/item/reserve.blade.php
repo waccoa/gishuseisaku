@@ -28,8 +28,9 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->type }}</td>
                                     <td>{{ $item->yoyaku_date}}</td>
+                                    @can('admin-role')
                                     <td>{{ $item-> user->name}}</td>
-                                
+                                    @endcan
                                 </tr>
                             @endforeach
                         </tbody>
