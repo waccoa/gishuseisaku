@@ -52,9 +52,9 @@
                             <!-- <option value="在庫あり">在庫あり</option>
                             <option value="レンタル中">レンタル中</option>
                             <option value="在庫なし">在庫なし</option> -->
-                            <option value="1">{{\App\Enums\PublishStateType::getDescription('1')}}</option> // 在庫あり
-                            <option value="2">{{\App\Enums\PublishStateType::getDescription('2')}}</option> // 在庫なし
-                            <option value="3">{{\App\Enums\PublishStateType::getDescription('3')}}</option> // レンタル中
+                            <option value="1">在庫あり</option> 
+                            <option value="2">在庫なし</option>
+                            <option value="3">レンタル中</option> 
                             </select>
                         </div>
 
