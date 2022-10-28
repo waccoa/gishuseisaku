@@ -56,11 +56,11 @@
                            
                             
                             <option value="1" @if($item->status == 1) selected
-                            @endif>{{\App\Enums\PublishStateType::getDescription('1')}}</option> // 在庫あり
+                            @endif>在庫あり</option> 
                             <option value="2" @if($item->status == 2) selected
-                            @endif>{{\App\Enums\PublishStateType::getDescription('2')}}</option> // 在庫なし
+                            @endif>在庫なし</option> 
                             <option value="3" @if($item->status == 3) selected
-                            @endif>{{\App\Enums\PublishStateType::getDescription('3')}}</option> // レンタル中
+                            @endif>レンタル中</option>
             
                             @endfor
                             </select>
