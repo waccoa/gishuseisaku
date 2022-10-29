@@ -60,7 +60,7 @@ class UserController extends Controller
             // バリデーション
             $this->validate($request, [
                 'name' => 'required|max:100',
-                'role' => 'required',
+                'email' => 'required|max:20',
             ]);
             $user->id = $request->id;
             $user->name = $request->name;
@@ -68,6 +68,8 @@ class UserController extends Controller
              //変数2＝(変数1=="ほげ1") ? "ほげ2" : "ほげ3"
              //１．変数1が「ほげ1」と同じだったら変数2に「ほげ2」を入れてね２．違ったら変数2に「ほげ3」を入れてね
              //ctrl,shift,zで進む
+            $user->name = $request->name;
+            $user->email = $request->email;
             $user->role = $request->role == 'on' ? 2 : 1;
             $user->save();
             return redirect('/users');
