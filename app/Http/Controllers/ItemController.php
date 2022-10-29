@@ -73,6 +73,9 @@ class ItemController extends Controller
             // バリデーション
             $this->validate($request, [
                 'name' => 'required|max:100',
+                'type' => 'required',
+                'release' => 'required',
+                'status' => 'required',
             ]);
 
             // 商品登録
@@ -104,6 +107,9 @@ class ItemController extends Controller
             // バリデーション
             $this->validate($request, [
                 'name' => 'required|max:100',
+                'type' => 'required',
+                'release' => 'required',
+                'status' => 'required',
             ]);
 
 

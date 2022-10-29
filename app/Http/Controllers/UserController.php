@@ -60,6 +60,7 @@ class UserController extends Controller
             // バリデーション
             $this->validate($request, [
                 'name' => 'required|max:100',
+                'role' => 'required',
             ]);
             $user->id = $request->id;
             $user->name = $request->name;
